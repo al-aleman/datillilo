@@ -33,10 +33,10 @@ outliers
 # [1]  285  458  542  646  716  758  913 1085 1501 1743 1987 2087 2235 2497 2909 3044 3920 3976 3983 4193
 
 # Convert a VCF file to LEA format
-# vcf2lfmm("valida.oneSNP.vcf", output.file = "valida.oneSNP.lfmm", force = TRUE)
+vcf2lfmm("valida.oneSNP.vcf", output.file = "valida.oneSNP.lfmm", force = TRUE)
 
 # Run LFMM analysis with 3 latent factors and other parameters
-project <- lfmm("valida.oneSNP.lfmm", "valida.oneSNP.env", K = 3, repetitions = 10, CPU = 24, iterations = 1000, burnin = 500, project = "new")
+project <- lfmm("valida.oneSNP.lfmm", "valida.oneSNP.env", K = 3, repetitions = 10, CPU = 24, iterations = 10000, burnin = 5000, project = "new")
 
 # Compute z-scores for each latent factor
 z.one <- z.scores(project, K = 3, d = 1)
