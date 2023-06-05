@@ -7,7 +7,7 @@ Scripts and data for **"Divergent lineages in a young species: the case of Datil
 ### DATA ANALYSIS
 **Raw data processing and SNP–calling**
 
-[This](https://github.com/al-aleman/datillilo/blob/main/raw_reads_list.txt) is the list of the raw demultiplexed raw sequences, we're working on making them available via Dryad ASAP. 
+[This](https://github.com/al-aleman/datillilo/blob/main/raw_reads_list.txt) is the list of the raw demultiplexed raw sequences, we're working on making them available via Dryad ASAP. The SNP dataset obtained after running the Stacks pipeline is already available [here](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed)
 
     # Quality check (pre-trimming) - should be done wherever the raw reads live
     mkdir quality
