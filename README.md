@@ -68,8 +68,7 @@ removed as a quality control filter before assemblying loci:
     cd structure
 
 Here is a compressed copy of [populations' output](https://github.com/al-aleman/datillilo/blob/main/populations.snps.vcf.gz).
-We will change the sequencing identifiers for the sampling identifiers [with this script](https://github.com/al-aleman/datillilo/blob/main/replace.sh)
-[popmap.txt](https://github.com/al-aleman/datillilo/blob/main/popmap.txt) and [GBS_SNP_filter.txt](https://github.com/al-aleman/datillilo/blob/main/GBS_SNP_filter.txt) will be required to use [GBS_SNP_filter.sh](https://github.com/laninsky/GBS_SNP_filter/tree/master)
+We will change the sequencing identifiers for the sampling identifiers [with this script](https://github.com/al-aleman/datillilo/blob/main/replace.sh); additionaly  [popmap.txt](https://github.com/al-aleman/datillilo/blob/main/popmap.txt) and [GBS_SNP_filter.txt](https://github.com/al-aleman/datillilo/blob/main/GBS_SNP_filter.txt) will be required to use [GBS_SNP_filter.sh](https://github.com/laninsky/GBS_SNP_filter/tree/master)
 
     chmod +x replace.sh
     ./replace.sh
