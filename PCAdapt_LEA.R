@@ -30,7 +30,7 @@ alpha <- 0.1
 outliers <- which(qval < alpha)
 length(outliers)
 outliers
-# Expected result should be close to:
+# Expected result should be similar to:
 # [1]  285  458  542  646  716  758  913 1085 1501 1743 1987 2087 2235 2497 2909 3044 3920 3976 3983 4193
 
 # Convert a VCF file to LEA format
@@ -194,8 +194,9 @@ BIOL20<-which(q.twenty<0.01 & abs(z.twenty)>2)
 # Combine the indices of significant markers for all latent factors
 joint_list <- c(BIOL1,BIOL2,BIOL3,BIOL4,BIOL5,BIOL6,BIOL7,BIOL8,BIOL9,BIOL10,BIOL11,BIOL12,BIOL13,BIOL14,BIOL15,BIOL16,BIOL17,BIOL18,BIOL19,BIOL20)
 unique(joint_list)
-# Expected result should be close to:
-# [1]  613  899 1079 1229 1366 1394 3406 3606 3735 3789 3822 3898 3108 4365 1390 1801 1993 2430  267 2087
+
+# Expected result should be similar to:
+# [1]  613  899 1079 1229 1366 1394 3406 3606 3735 3789 3822 3898 3108 4365 1390 1801 1993 2430  267 2088
 #[21] 2968 3301 3414 3932  557  746  870  961 1393 1828 2039  318 1563 2021  488 1179 1282 1289 1372 1391
 #[41] 3066 4221  371  701 2678 3006 3284 4052 4056   51 4360  345 2030 3656 3933  734 2318 2083 3508 3882
 #[61] 4218 3944 4257
