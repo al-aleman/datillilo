@@ -82,7 +82,7 @@ We will change the sequencing identifiers for the sampling identifiers [with thi
     GBS_SNP_filter.sh
     # I suggest taking valida.oneSNP.vcf to an independent folder as this is the dataset on which we can start making biological questions
     
- - [ ] Raw data processing and SNP–calling is done!
+ - [x] Raw data processing and SNP–calling is done!
  Here is a copy of [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/valida.oneSNP.vcf)
 
 **Genetic (nuclear) structure**
