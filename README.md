@@ -38,7 +38,8 @@ Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://g
     # The multiqc_report.html file can be checked in a local browser
 
 These (**13**) [samples](https://github.com/al-aleman/datillilo/blob/main/data/flagged_raw_sequences.txt) had less than one million raw reads and were removed as a quality control filter before assemblying loci.
-[valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated).
+
+The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated).
 
     # De-novo Stacks' assembly
     cd ..
@@ -124,7 +125,7 @@ This is how I plot the PCA in R:
     b <- b + theme_bw() + theme(panel.border =  element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank()) +geom_hline(yintercept = 0, color="lightgray") +  geom_vline(xintercept = 0, color="lightgray")
     b + geom_point(size = 7)+ xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)"))
 
-For the NJ tree from the samples' pairwise genetic distance matrix, I join the IDs with the matrix by hand (*suggestions are welcome if anyone knows a better way*), then I transform it as below, and visualize the final tree in [iTOL 6](https://itol.embl.de/upload.cgi).
+For the NJ tree from the samples' pairwise genetic distance matrix, I join the IDs with the matrix by hand (*suggestions are welcome if anyone knows a better way*), then I transform it as below in R, and visualize the final tree in [iTOL 6](https://itol.embl.de/upload.cgi).
 
     library(ape)
     datamatrix = as.matrix(read.table("./valida.oneSNP.dist", header=T, fill=T))
@@ -141,7 +142,7 @@ Descriptors (HE, H.O., and FIS) for each lineage and the mean pairwise Weir and 
 ---
 ### Outlier SNPs and signatures of differentiation by local adaptation
 
-Analyses are performed in R, and the scripts can be found [here](https://github.com/al-aleman/datillilo/blob/main/scripts/PCAdapt_LEA.R). Here is the [matrix containing the environmental variables](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.env) that was made with from WorldClim's Bioclimatic variables. From these results, **83 SNPs** were removed from the dataset to produce a [vcf with neutral SNPs](https://github.com/al-aleman/datillilo/blob/main/data/valida.neutral.vcf) for the demographic history analyses. To do this, I usually get the SNP list from the  [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.vcf) file (with VCFtools and the first two columns of the -*-missing-site* output, for example), and then print the lines where the outliers are to make a flagged list of the positions to exclude.
+Analyses are performed in R, and the scripts can be found [here](https://github.com/al-aleman/datillilo/blob/main/scripts/PCAdapt_LEA.R). Here is the [matrix containing the environmental variables](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.env) that was made with from WorldClim's Bioclimatic data. From these results, **83 SNPs** were removed from the dataset (63 unique SNPs potentially associated with adaptation to multiple environmental variables identified by LFMM, and 20 putative outlier SNPs detected by PCAdapt) to produce a [vcf with neutral SNPs](https://github.com/al-aleman/datillilo/blob/main/data/valida.neutral.vcf) for the demographic history analyses. To do this, I usually get the SNP list from the  [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.vcf) file (with VCFtools and the first two columns of the -*-missing-site* output, for example), and then print the lines where the outliers are to make a flagged list of the positions to exclude.
 
 ---
 ### Demographic history
@@ -155,7 +156,7 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
     # I found 18,18,18 as a good trade-off to maximizing an even number of segregating sites (second number) and a balanced sample size (first number)
     easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
 
-[Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below (WARNING: This is quite slow. I'm sharing the [outputs of this analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results)) as a consideration for time constrains. According to [the extended summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from a common ancestral population.
+[Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below. WARNING: This is quite slow. I'm sharing the [outputs of this analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results) as a consideration for time constrains. According to [the extended summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from a common ancestral population.
 
     python dadi_Run_3D_Set_North-South.py
     python dadi_Run_3D_Set_South-North.py
