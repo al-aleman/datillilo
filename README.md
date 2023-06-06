@@ -152,16 +152,18 @@ Analyses are performed in R, and the scripts can be found [here](https://github.
 ---
 ### Demographic history
 
-Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Daniel Portik's [δaδi_pipeline](https://github.com/dportik/dadi_pipeline) and [Stacks_pipeline](https://github.com/dportik/Stacks_pipeline), and [easySFS](https://github.com/isaacovercast/easySFS). With the neutral vcf as input (ideally, in a new folder), we're back to populations (Stacks). We can use the neutral dataset to get the *haplotypes.tsv file, which we will input to [Convert_tsv_to_dadi.py](https://github.com/dportik/Stacks_pipeline/blob/master/stacks-pipeline-scripts/Convert_tsv_to_dadi.py) and produce [the SNP file](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/SNPs_file_Northern_Central_Southern.txt) to run δaδi.
+Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Daniel Portik's [δaδi_pipeline](https://github.com/dportik/dadi_pipeline) and [Stacks_pipeline](https://github.com/dportik/Stacks_pipeline), and [easySFS](https://github.com/isaacovercast/easySFS). With the neutral vcf as input (ideally, in a new folder), we're back to populations (Stacks). We can use the neutral dataset to get the *haplotypes.tsv file, which we will input to [Convert_tsv_to_dadi.py](https://github.com/dportik/Stacks_pipeline/blob/master/stacks-pipeline-scripts/Convert_tsv_to_dadi.py) and produce [the SNP file](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/SNPs_file_Northern_Central_Southern.txt) to run δaδi. 
+
+> Friendly reminder to test which python version works best with each software.
 
     populations -V valida.neutral.vcf -O . -M pops.txt -t 32 --vcf
     
     # The script below will make the file SNPs_file_Northern_Central_Southern.txt, which will need to run Models_3D.py
-    Convert_tsv_to_dadi.py -i valida.neutral.haplotypes.tsv -o . -p popmap.txt
+    python Convert_tsv_to_dadi.py -i valida.neutral.haplotypes.tsv -o . -p popmap.txt
     
     # easySFS is a super-fast way to preview what projection is best, I do not use it for data conversion
     # I found 18,18,18 as a good trade-off to maximizing an even number of segregating sites (second number) and a balanced sample size (first number)
-    easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
+    python easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
 
 [Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below. WARNING: This is quite slow. I'm sharing the [outputs of this analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results) as a consideration for time constrains. According to [the extended summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from a common ancestral population.
 
@@ -228,9 +230,12 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
 
 ---
 ### Phylogenetic relationships and molecular clock analyses (under construction)
-Requirements: 
+Requirements: RAxML, [BEAST](https://github.com/beast-dev/beast-mcmc/releases/tag/v1.8.4) (I found version 1.8.4 to be more straightforward for replicating [Smith et al. (2021)](https://bsapubs.onlinelibrary.wiley.com/doi/full/10.1002/ajb2.1633)), [MAFFT](https://mafft.cbrc.jp/alignment/server/), and a [consensus-FASTA-maker](https://github.com/al-aleman/datillilo/blob/main/scripts/consensus.py).
 
     # RAxML run (the outputs of interest are *.raxml.supportFBP and *.raxml.supportTBE)
     raxml-ng --all --msa *fa --model GTR+I+G --prefix tree --seed 12345 \
     --outgroup Yucca_schidigera --bs-metric fbp,tbe --tree rand{1000} \
     --bs-trees autoMRE --threads 32
+    
+    #
+    python consensus.py input.fasta output.fasta
