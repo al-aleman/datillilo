@@ -158,5 +158,3 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
     python dadi_Run_3D_Set_Admixed.py
     # Once finished, results can be summarized by running
     Summarize_Outputs.py .
-    # An the short summary can be visualized with
-    more Results_Summary_Short.txt
