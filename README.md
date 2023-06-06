@@ -222,3 +222,9 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     done
     
     # Mapping-statistics (merely informative)
+
+ - [x] Our whole-chloroplast-genome-sequences are ready!
+ Here is a copy of...
+
+---
+### Phylogenetic relationships and molecular clock analyses (in construction)
