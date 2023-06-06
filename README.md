@@ -48,10 +48,12 @@ The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.tx
     mkdir stacks
     denovo_map.pl --samples ./ --popmap ./valida.txt -o ./stacks -T 32 -M 3 -n 4 -m 8
     cd stacks
+    
     # SNP-calling
     mkdir populations
     populations -P . -M ./../valida.txt -O ./populations/ -t 32 --vcf --min-maf 0.05 -r 0.5
     cd populations
+    
     # populations.snps.vcf is our output of interest, we'll make a copy to modify freely knowing that this one is safe
     mkdir structure
     cp populations.snps.vcf ./structure/
@@ -71,6 +73,7 @@ We will change the sequencing identifiers for the sampling identifiers [with thi
     # (prioritizing the SNP found in the most individuals -if a tie, then the SNP with the highest average coverage, and if a tie, a random SNP)
     # Our interest is the file *.oneSNP.vcf, therefore we do not care if things crash after this.
     GBS_SNP_filter.sh
+    
     # I suggest taking valida.oneSNP.vcf to an independent folder as this is the dataset on which we can start making biological questions
     mkdir analyses
     mv valida.oneSNP.vcf analyses
@@ -152,8 +155,10 @@ Analyses are performed in R, and the scripts can be found [here](https://github.
 Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Daniel Portik's [δaδi_pipeline](https://github.com/dportik/dadi_pipeline) and [Stacks_pipeline](https://github.com/dportik/Stacks_pipeline), and [easySFS](https://github.com/isaacovercast/easySFS). With the neutral vcf as input (ideally, in a new folder), we're back to populations (Stacks). We can use the neutral dataset to get the *haplotypes.tsv file, which we will input to [Convert_tsv_to_dadi.py](https://github.com/dportik/Stacks_pipeline/blob/master/stacks-pipeline-scripts/Convert_tsv_to_dadi.py) and produce [the SNP file](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/SNPs_file_Northern_Central_Southern.txt) to run δaδi.
 
     populations -V valida.neutral.vcf -O . -M pops.txt -t 32 --vcf
+    
     # The script below will make the file SNPs_file_Northern_Central_Southern.txt, which will need to run Models_3D.py
     Convert_tsv_to_dadi.py -i valida.neutral.haplotypes.tsv -o . -p popmap.txt
+    
     # easySFS is a super-fast way to preview what projection is best, I do not use it for data conversion
     # I found 18,18,18 as a good trade-off to maximizing an even number of segregating sites (second number) and a balanced sample size (first number)
     easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
@@ -164,6 +169,7 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
     python dadi_Run_3D_Set_South-North.py
     python dadi_Run_3D_Set_Simultaneous.py
     python dadi_Run_3D_Set_Admixed.py
+    
     # Once finished, results can be summarized by running
     Summarize_Outputs.py .
 
@@ -186,21 +192,33 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     ref=/home/aaleman/DATA/software/bbmap/resources/nextera.fa.gz \
     trimq=10 minlen=100 qtrim=rl  trimq=10
     done
-
-    # Read-mapping
     cd cleandata
+    
     # Indexing the reference genome (should be in the folder)
     bowtie2-build ./schidigera.fasta schidigera
     mkdir plastome
-    # Sequence-bating
+    
+    # Read-mapping
     for i in $(ls *.fastq.gz | sed 's/.fastq.gz//')
     do 
     bowtie2 -x ./schidigera -U $i\.fastq.gz -S ./plastome/$i.sam --very-sensitive-local -p 32
     done
     cd plastome
     mkdir bam
+    
     # Transform the .sam files into .bam
     for i in $(ls *.sam | sed 's/.sam//')
     do 
     samtools view -S -b $i\.sam -@ 32 | samtools sort -@ 32 > ./bam/$i.bam
     done
+    cd bam
+    mkdir chloroplast_sequences
+    mkdir stats
+    
+    # Nucleotide-calling 
+    for i in $(ls *.bam | sed 's/.bam//')
+    do
+    angsd -dofasta 2 -doCounts 1 -i $i.bam -minQ 20 -minMapQ 20 -nThreads 32 -r NC_013823.1 -out ./chloroplast_sequences/$i.plast
+    done
+    
+    # Mapping-statistics (merely informative)
