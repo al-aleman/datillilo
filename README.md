@@ -1,13 +1,14 @@
 ![enter image description here](https://st3.depositphotos.com/9223738/19443/v/600/depositphotos_194439354-stock-illustration-desert-seamless-pattern-with-joshua.jpg)
 
-Scripts and data for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that any required software, functions, libraries, packages (etc) are previously installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications.
+Data and scripts for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that any required software, functions, libraries, packages, modules (etc) are previously installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications.
 
-*Project description:* We examined the phylogeographic patterns of *Y. valida* throughout the species' geographic range. We hypothesised that past climatic fluctuations caused populations isolation, and since the species has a short-distance dispersal, we expected to find divergent lineages across its distribution. We genotyped 160 plants from 20 locations by NextRAD sequencing and aimed to i) identify the number of genetic lineages of *Y. valida* across its range, ii) reconstruct its populations' demographic history and iii) estimate the species' age.
+*Project description:* We examined the phylogeographic patterns of *Y. valida* throughout the species' geographic range. We hypothesised that past climatic fluctuations caused populations isolation, and [since the species has a short-distance dispersal](https://academic.oup.com/biolinnean/article/136/2/364/6565171), we expected to find divergent lineages across its distribution. We genotyped 160 plants from 20 locations by NextRAD sequencing and aimed to i) identify the number of genetic lineages of *Y. valida* across its range, ii) reconstruct its populations' demographic history and iii) estimate the species' age using whole-chloroplast-genome data.
 
 ### DATA ANALYSIS
 **Raw data processing and SNP–calling**
 
-[This](https://github.com/al-aleman/datillilo/blob/main/raw_reads_list.txt) is the list of the raw demultiplexed raw sequences, we're working on making them available via Dryad ASAP. The SNP dataset obtained after running the Stacks pipeline is already available [here](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed)
+[This](https://github.com/al-aleman/datillilo/blob/main/data/raw_reads_list.txt) is a list of the raw demultiplexed raw sequences, we're working on making them available via Dryad shortly. The workflow and SNP data obtained after running the Stacks pipeline is already available [below](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed). 
+Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://github.com/ewels/MultiQC) and [BBTools](https://github.com/kbaseapps/BBTools).
 
     # Quality check (pre-trimming) - should be done wherever the raw reads live
     mkdir quality
@@ -35,23 +36,8 @@ Scripts and data for **"Divergent lineages in a young species: the case of Datil
     multiqc --interactive .
     # The multiqc_report.html file can be checked in a local browser
 
-> The (**13**) samples below had less than one million raw reads and were
-removed as a quality control filter before assemblying loci:
-2458_CTAGTACG-ACTGCATA_S118_L002_R1_001_cleaned.fastq.gz
-2458_TAAGGCGA-TAGATCGC_S2_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-AGAGTAGA_S116_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-GTAAGGAG_S117_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-TAGATCGC_S113_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-TATCCTCT_S115_L002_R1_001_cleaned.fastq.gz
-2458_GTAGAGGA-GTAAGGAG_S61_L002_R1_001_cleaned.fastq.gz
-1295_GTTGTGGC-AAGGAGTA_S625_L008_R1_001_cleaned.fastq.gz
-1295_GTTGTGGC-CTAAGCCT_S628_L008_R1_001_cleaned.fastq.gz
-2458_CGAGGCTG-CTAAGCCT_S95_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-AAGGAGTA_S119_L002_R1_001_cleaned.fastq.gz
-2458_CTAGTACG-CTCTCTAT_S114_L002_R1_001_cleaned.fastq.gz
-2458_GCTACGCT-AAGGAGTA_S82_L002_R1_001_cleaned.fastq.gz
-
-[valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for Stacks (please verify that is tab- and not space-separated).
+These (**13**) [samples](https://github.com/al-aleman/datillilo/blob/main/data/flagged_raw_sequences.txt) had less than one million raw reads and were removed as a quality control filter before assemblying loci.
+[valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated).
 
     # De-novo Stacks' assembly
     cd ..
@@ -67,8 +53,8 @@ removed as a quality control filter before assemblying loci:
     cp populations.snps.vcf ./structure/
     cd structure
 
-Here is a compressed copy of [populations' output](https://github.com/al-aleman/datillilo/blob/main/populations.snps.vcf.gz).
-We will change the sequencing identifiers for the sampling identifiers [with this script](https://github.com/al-aleman/datillilo/blob/main/replace.sh); additionaly  [popmap.txt](https://github.com/al-aleman/datillilo/blob/main/popmap.txt) and [GBS_SNP_filter.txt](https://github.com/al-aleman/datillilo/blob/main/GBS_SNP_filter.txt) will be required to use [GBS_SNP_filter.sh](https://github.com/laninsky/GBS_SNP_filter/tree/master)
+Here is a compressed copy of the [populations' output](https://github.com/al-aleman/datillilo/blob/main/data/populations.snps.vcf.gz).
+We will change the sequencing identifiers for the sampling identifiers [with this script](https://github.com/al-aleman/datillilo/blob/main/scripts/replace.sh); additionaly [popmap.txt](https://github.com/al-aleman/datillilo/blob/main/data/popmap.txt) and [GBS_SNP_filter.txt](https://github.com/al-aleman/datillilo/blob/main/data/GBS_SNP_filter.txt) will be required to use [GBS_SNP_filter.sh](https://github.com/laninsky/GBS_SNP_filter/tree/master)
 
     chmod +x replace.sh
     ./replace.sh
@@ -77,16 +63,20 @@ We will change the sequencing identifiers for the sampling identifiers [with thi
     awk '/^#/ {print} !/^#/ {sub(/^([0-9]+)/, "chrom_&"); print}' populations.snps.vcf > valida.vcf
     
     # Ensure that GBS_SNP_filter.txt has 2 extra empty lines after #CHROM
-    # GBS_SNP_filter.sh will be run simply to filter for one SNP/locus (prioritizing the SNP found in the most individuals -if a tie, then the SNP with the highest average coverage, and if a tie, a random SNP)
+    # GBS_SNP_filter.sh will be run simply to filter for one SNP/locus
+    # (prioritizing the SNP found in the most individuals -if a tie, then the SNP with the highest average coverage, and if a tie, a random SNP)
     # Our interest is the file *.oneSNP.vcf, therefore we do not care if things crash after this.
     GBS_SNP_filter.sh
     # I suggest taking valida.oneSNP.vcf to an independent folder as this is the dataset on which we can start making biological questions
+    mkdir analyses
+    mv valida.oneSNP.vcf analyses
+    cd analyses
     
  - [x] Raw data processing and SNP–calling is done!
- Here is a copy of [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/valida.oneSNP.vcf)
+ Here is a copy of [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.vcf)
 
 **Genetic (nuclear) structure**
-In a new folder, where (ideally) only *valida.oneSNP.vcf* lives
+Requirements: [Plink 1.9](https://www.cog-genomics.org/plink/1.9/basic_stats), [ADMIXTURE](https://dalexander.github.io/admixture/), and [R](https://www.r-project.org/).
 
     # I prefer to use Plink v.1
     plink --vcf valida.oneSNP.vcf --allow-extra-chr --distance square --pca --make-bed
@@ -104,15 +94,13 @@ In a new folder, where (ideally) only *valida.oneSNP.vcf* lives
     done
     # The CV error can be seen with grep -h CV log*.out
 
-*Results can be easily plotted using R:*
+Results can be easily plotted using R (Two new popmaps will be needed, [pops.txt](https://github.com/al-aleman/datillilo/blob/main/data/pops.txt) and [PCA.txt](https://github.com/al-aleman/datillilo/blob/main/data/PCA.txt)):
 
-Two new popmaps will be needed, [pops.txt](https://github.com/al-aleman/datillilo/blob/main/pops.txt) and [PCA.txt](https://github.com/al-aleman/datillilo/blob/main/PCA.txt).
-
-**First**, for the ADMIXTURE results, I like to use [Joana Meier's script](https://github.com/speciationgenomics/scripts/blob/master/plotADMIXTURE.r), it requires four arguments, the prefix for the ADMIXTURE output files (-p ), the file with the species information (-i ), the maximum number of K to be plotted (-k ), and a list with the populations or species separated by commas (-l <pop1,pop2...>). The list of populations provided with -l gives the order in which the populations or species shall be plotted. Example with K = 5 below:
+For the ADMIXTURE results, I like to use [Joana Meier's script](https://github.com/speciationgenomics/scripts/blob/master/plotADMIXTURE.r), it requires four arguments: the prefix for the ADMIXTURE output files (-p ), the file with the species information (-i ), the maximum number of *K* to be plotted (-k ), and a list with the populations or species separated by commas (-l <pop1,pop2...>). The list of populations provided with -l gives the order in which the populations or species shall be plotted. Example with *K* = 5 below:
 
     Rscript plotADMIXTURE.r -p valida.oneSNP -i pops.txt -k 5 -l Northern,Central, Southern
 
-**Second**, this is how I plot the PCA:
+This is how I plot the PCA in R:
 
     library(tidyverse)
     pca <- read.table("./valida.oneSNP.eigenvec")
@@ -134,7 +122,7 @@ Two new popmaps will be needed, [pops.txt](https://github.com/al-aleman/datillil
     b <- b + theme_bw() + theme(panel.border =  element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank()) +geom_hline(yintercept = 0, color="lightgray") +  geom_vline(xintercept = 0, color="lightgray")
     b + geom_point(size = 7)+ xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)"))
 
-**Third**, for the NJ tree from the samples' pairwise genetic distance matrix, I join the IDs with the matrix by hand (*suggestions are welcome, if anyone knows a better way*), then transform it as below, and visualize the final tree in [iTOL 6](https://itol.embl.de/upload.cgi).
+For the NJ tree from the samples' pairwise genetic distance matrix, I join the IDs with the matrix by hand (*suggestions are welcome if anyone knows a better way*), then I transform it as below, and visualize the final tree in [iTOL 6](https://itol.embl.de/upload.cgi).
 
     library(ape)
     datamatrix = as.matrix(read.table("./valida.oneSNP.dist", header=T, fill=T))
@@ -143,6 +131,29 @@ Two new popmaps will be needed, [pops.txt](https://github.com/al-aleman/datillil
     plot(phylotree, type="fan")
     write.tree(phy=phylotree, file="NJ.nwk")
 
-**Note: Genetic diversity** descriptors (HE, H.O., and FIS) for each lineage and the mean pairwise Weir and Cockerham's weighted values of genetic differentiation (standardised FST) were calculated with GENODIVE 3.0. To assess the isolation by distance null hypothesis, i.e., the correlation between the geographical and genetic distance between samples, a Mantel test was carried out correlating the individuals' Euclidean genetic distance and the pairwise distance between sampling locations (in kilometres, produced with the [Geographic Distance Matrix Generator](https://biodiversityinformatics.amnh.org/open_source/gdmg/)), after introducing a random jitter (+/- 0.05°) to samples belonging to shared sampling locations ([file here](https://github.com/al-aleman/datillilo/blob/main/coordinates_jitter.txt)). The significance of the Mantel test was evaluated with 99,999 permutations. Any required genetic data conversion was completed in PGDSpider 2.1.1.5. Alternatively (if not having acces to GENODIVE), Plink, VCFTools, Genepop, and/or Arlequin can be used to get these answers.
+**Note: Genetic diversity** descriptors (HE, H.O., and FIS) for each lineage and the mean pairwise Weir and Cockerham's weighted values of genetic differentiation (standardised FST) were calculated with [GENODIVE](https://www.bentleydrummer.nl/software/software/GenoDive.html). To assess the isolation by distance null hypothesis, i.e., the correlation between the geographical and genetic distance between samples, a Mantel test was carried out correlating the individuals' Euclidean genetic distance and the pairwise distance between sampling locations (in kilometres, produced with the [Geographic Distance Matrix Generator](https://biodiversityinformatics.amnh.org/open_source/gdmg/)), after introducing a random jitter (+/- 0.05°) to samples belonging to shared sampling locations ([file here](https://github.com/al-aleman/datillilo/blob/main/coordinates_jitter.txt)). The significance of the Mantel test was evaluated with 99,999 permutations. Genetic data conversion from *.vcf* to *.gen* was completed in [PGDSpider 2.1.1.5](http://www.cmpg.unibe.ch/software/PGDSpider/). Alternatively (if not having acces to GENODIVE), Plink, [VCFtools](https://vcftools.github.io/index.html), [Genepop](https://genepop.curtin.edu.au/), and/or [Arlequin](http://cmpg.unibe.ch/software/arlequin35/) can be used to get these answers.
 
-**Outlier SNPs and signatures of differentiation by local adaptation** analyses are performed in R, and the scripts can be found [here](https://github.com/al-aleman/datillilo/blob/main/PCAdapt_LEA.R). Here is the [matrix containing the environmental variables](https://github.com/al-aleman/datillilo/blob/main/valida.oneSNP.env) that was made with from WorldClim's Bioclimatic variables. From these results, **83 SNPs** were removed from the dataset to produce a [vcf with neutral SNPs](https://github.com/al-aleman/datillilo/blob/main/valida.neutral.vcf) for the demographic history analyses. To do this, I usually get the SNP list from the  [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/valida.oneSNP.vcf) file (with VCFTools and the first two columns of the --missing-site output, for example), and then print the lines where the outliers are to make a flagged list of the positions to exclude.
+**Outlier SNPs and signatures of differentiation by local adaptation** 
+Analyses are performed in R, and the scripts can be found [here](https://github.com/al-aleman/datillilo/blob/main/scripts/PCAdapt_LEA.R). Here is the [matrix containing the environmental variables](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.env) that was made with from WorldClim's Bioclimatic variables. From these results, **83 SNPs** were removed from the dataset to produce a [vcf with neutral SNPs](https://github.com/al-aleman/datillilo/blob/main/data/valida.neutral.vcf) for the demographic history analyses. To do this, I usually get the SNP list from the  [valida.oneSNP.vcf](https://github.com/al-aleman/datillilo/blob/main/data/valida.oneSNP.vcf) file (with VCFtools and the first two columns of the -*-missing-site* output, for example), and then print the lines where the outliers are to make a flagged list of the positions to exclude.
+
+**Demographic history**
+
+Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Daniel Portik's [δaδi_pipeline](https://github.com/dportik/dadi_pipeline) and [Stacks_pipeline](https://github.com/dportik/Stacks_pipeline), and [easySFS](https://github.com/isaacovercast/easySFS). With the neutral vcf as input (ideally, in a new folder), we're back to populations (Stacks). We can use the neutral dataset to get the *haplotypes.tsv file, which we will input to [Convert_tsv_to_dadi.py](https://github.com/dportik/Stacks_pipeline/blob/master/stacks-pipeline-scripts/Convert_tsv_to_dadi.py) and produce [the SNP file](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/SNPs_file_Northern_Central_Southern.txt) to run δaδi.
+
+    populations -V valida.neutral.vcf -O . -M pops.txt -t 32 --vcf
+    # The script below will make the file SNPs_file_Northern_Central_Southern.txt, which will need to run Models_3D.py
+    Convert_tsv_to_dadi.py -i valida.neutral.haplotypes.tsv -o . -p popmap.txt
+    # easySFS is a super-fast way to preview what projection is best, I do not use it for data conversion
+    # I found 18,18,18 as a good trade-off to maximizing an even number of segregating sites (second number) and a balanced sample size (first number)
+    easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
+
+[Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below (WARNING: This is quite slow. I'm sharing the [outputs of this analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results)) as a consideration for time constrains. According to [the extended summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from a common ancestral population.
+
+    python dadi_Run_3D_Set_North-South.py
+    python dadi_Run_3D_Set_South-North.py
+    python dadi_Run_3D_Set_Simultaneous.py
+    python dadi_Run_3D_Set_Admixed.py
+    # Once finished, results can be summarized by running
+    Summarize_Outputs.py .
+    # An the short summary can be visualized with
+    more Results_Summary_Short.txt
