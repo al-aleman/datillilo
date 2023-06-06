@@ -1,0 +1,14 @@
+# Samples with less than one million raw reads (removed as a quality control filter before running Stacks)
+2458_CTAGTACG-ACTGCATA_S118_L002_R1_001_cleaned.fastq.gz
+2458_TAAGGCGA-TAGATCGC_S2_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-AGAGTAGA_S116_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-GTAAGGAG_S117_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-TAGATCGC_S113_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-TATCCTCT_S115_L002_R1_001_cleaned.fastq.gz
+2458_GTAGAGGA-GTAAGGAG_S61_L002_R1_001_cleaned.fastq.gz
+1295_GTTGTGGC-AAGGAGTA_S625_L008_R1_001_cleaned.fastq.gz
+1295_GTTGTGGC-CTAAGCCT_S628_L008_R1_001_cleaned.fastq.gz
+2458_CGAGGCTG-CTAAGCCT_S95_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-AAGGAGTA_S119_L002_R1_001_cleaned.fastq.gz
+2458_CTAGTACG-CTCTCTAT_S114_L002_R1_001_cleaned.fastq.gz
+2458_GCTACGCT-AAGGAGTA_S82_L002_R1_001_cleaned.fastq.gz
