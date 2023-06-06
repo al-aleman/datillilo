@@ -176,7 +176,7 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
  - [x] Objectives i) (identify the number of genetic lineages of *Y. valida* across its range) and ii) (reconstruct its populations' demographic history) are done!
 
 ---
-### Whole chloroplast genome sequences recovery (in construction)
+### Whole chloroplast genome sequences recovery (under construction)
 
 This is a reference-guided workflow to reconstruct whole-chloroplast-genome sequences (as a by-product of the enzymatic fragmentation for the high-throughput sequencing libraries preparation without isolating cpDNA), exposed by [Aleman et al. (2023)](https://www.biorxiv.org/content/10.1101/2023.04.21.537876v1). We included raw-sequencing-data of 40 samples from [Arteaga et al. (2020)](https://www.frontiersin.org/articles/10.3389/fpls.2020.00685/full) and used the chloroplast genome of *Y. schidigera* (GenBank: [NC_032714.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1)) as reference.
 
@@ -227,4 +227,4 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
  Here is a copy of...
 
 ---
-### Phylogenetic relationships and molecular clock analyses (in construction)
+### Phylogenetic relationships and molecular clock analyses (under construction)
