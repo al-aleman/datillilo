@@ -1,6 +1,8 @@
 ![enter image description here](https://st3.depositphotos.com/9223738/19443/v/600/depositphotos_194439354-stock-illustration-desert-seamless-pattern-with-joshua.jpg)
 
-Data and scripts for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that required software, functions, libraries, packages, modules (etc) are previously installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications.
+Data and scripts for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that required software, functions, libraries, packages, modules (etc) are previously installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications. 
+
+> Note: Please read the software manuals if following these scripts for another research or dataset and adjust parameters accordingly.
 
 **Project description:** We examined the phylogeographic patterns of *Y. valida* throughout the species' geographic range. We hypothesised that past climatic fluctuations caused populations isolation, and [since the species has a short-distance dispersal](https://academic.oup.com/biolinnean/article/136/2/364/6565171), we expected to find divergent lineages across its distribution. We genotyped 160 plants from 20 locations by NextRAD sequencing and aimed to i) identify the number of genetic lineages of *Y. valida* across its range, ii) reconstruct its populations' demographic history and iii) estimate the species' age using whole-chloroplast-genome data.
 
@@ -39,7 +41,7 @@ Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://g
 
 These (**13**) [samples](https://github.com/al-aleman/datillilo/blob/main/data/flagged_raw_sequences.txt) had less than one million raw reads and were removed as a quality control filter before assemblying loci.
 
-The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated).
+The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated). Note that Stacks' parameters were optimized according to [Paris et al. (2017)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.12775) and [Mastretta-Yanes et al. (2014)](https://onlinelibrary.wiley.com/doi/full/10.1111/1755-0998.12291) that involved iterating different ranges of values for the parameters *m* (the minimum number of identical reads required to create a stack), *M* (the number of mismatches allowed between loci on a single individual), and *n* (the number of mismatches allowed between loci when building the catalog). The Stacks' run below is based on the optimal set of parameters that maximized the amount of reliable information.
 
     # De-novo Stacks' assembly
     cd ..
