@@ -28,7 +28,7 @@ Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://g
     bbduk.sh in=$i\.fastq.gz \
     out=./cleandata/$i\_cleaned.fastq.gz ktrim=r k=17 hdist=1 mink=8 \
     ref=/home/aaleman/DATA/software/bbmap/resources/nextera.fa.gz \
-    trimq=10 minlen=110 ftr=119 ftl=10 qtrim=rl  trimq=10
+    minlen=110 ftr=119 ftl=10 qtrim=rl  trimq=10
     done
 
     # Quality check (post-trimming)
@@ -174,16 +174,9 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
 
 This is a reference-guided workflow to reconstruct whole-chloroplast-genome sequences (as a by-product of the enzymatic fragmentation for the high-throughput sequencing libraries preparation without isolating cpDNA), exposed by [Aleman et al. (2023)](https://www.biorxiv.org/content/10.1101/2023.04.21.537876v1). We included raw-sequencing-data of 40 samples from [Arteaga et al. (2020)](https://www.frontiersin.org/articles/10.3389/fpls.2020.00685/full) and used the chloroplast genome of *Y. schidigera* (GenBank: [NC_032714.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1)) as reference.
 
-Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://bowtie-bio.sourceforge.net/index.shtml), [Samtools](http://www.htslib.org/), and [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
+Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml), [Samtools](http://www.htslib.org/), and [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD).
 
-    # Quality check (pre-trimming) - should be done wherever the raw reads live
-    mkdir quality
-    fastqc -t 32 ./*.fastq.gz -o ./quality
-    cd quality
-    multiqc --interactive .
-    # The multiqc_report.html file can be checked in a local browser
-
-    # Quality-trimming + adapters removal + length forcing for Stacks
+    # Quality-trimming + adapters removal
     cd ..
     mkdir cleandata    
     for i in $(ls *.fastq.gz | sed 's/.fastq.gz//')
@@ -191,13 +184,23 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     bbduk.sh in=$i\.fastq.gz \
     out=./cleandata/$i\_cleaned.fastq.gz ktrim=r k=17 hdist=1 mink=8 \
     ref=/home/aaleman/DATA/software/bbmap/resources/nextera.fa.gz \
-    trimq=10 minlen=110 ftr=119 ftl=10 qtrim=rl  trimq=10
+    trimq=10 minlen=100 qtrim=rl  trimq=10
     done
 
-    # Quality check (post-trimming)
+    # Read-mapping
     cd cleandata
-    mkdir quality
-    fastqc -t 32 ./*.fastq.gz -o ./quality
-    cd quality
-    multiqc --interactive .
-    # The multiqc_report.html file can be checked in a local browser
+    # Indexing the reference genome (should be in the folder)
+    bowtie2-build ./schidigera.fasta schidigera
+    mkdir plastome
+    # Sequence-bating
+    for i in $(ls *.fastq.gz | sed 's/.fastq.gz//')
+    do 
+    bowtie2 -x ./schidigera -U $i\.fastq.gz -S ./plastome/$i.sam --very-sensitive-local -p 32
+    done
+    cd plastome
+    mkdir bam
+    # Transform the .sam files into .bam
+    for i in $(ls *.sam | sed 's/.sam//')
+    do 
+    samtools view -S -b $i\.sam -@ 32 | samtools sort -@ 32 > ./bam/$i.bam
+    done
