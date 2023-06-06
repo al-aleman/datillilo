@@ -228,3 +228,9 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
 
 ---
 ### Phylogenetic relationships and molecular clock analyses (under construction)
+Requirements: 
+
+    # RAxML run (the outputs of interest are *.raxml.supportFBP and *.raxml.supportTBE)
+    raxml-ng --all --msa *fa --model GTR+I+G --prefix tree --seed 12345 \
+    --outgroup Yucca_schidigera --bs-metric fbp,tbe --tree rand{1000} \
+    --bs-trees autoMRE --threads 32
