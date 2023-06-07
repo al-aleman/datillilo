@@ -252,7 +252,7 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     seqtk seq capensis.fa
 
  - [x] Our whole-chloroplast-genome-sequences by species are ready!
- [Here](https://github.com/al-aleman/datillilo/blob/main/data/capensis_valida_fasta.zip) is a compressed folder with the chloroplast sequences for each species, one species per file.
+ [Here](https://github.com/al-aleman/datillilo/blob/main/data/capensis_valida_fasta.zip) is a folder with the chloroplast sequences for each species, one species per file.
 
 ---
 ### Phylogenetic relationships and molecular clock analyses (under construction)
