@@ -6,11 +6,13 @@ Data and scripts for **"Divergent lineages in a young species: the case of Datil
 
 **Project description:** We examined the phylogeographic patterns of *Y. valida* throughout the species' geographic range. We hypothesised that past climatic fluctuations caused populations isolation, and [since the species has a short-distance dispersal](https://academic.oup.com/biolinnean/article/136/2/364/6565171), we expected to find divergent lineages across its distribution. We genotyped 160 plants from 20 locations by NextRAD sequencing and aimed to i) identify the number of genetic lineages of *Y. valida* across its range, ii) reconstruct its populations' demographic history and iii) estimate the species' age using whole-chloroplast-genome data.
 
+**Metadata:** Sampling and sequencing IDs plus sampling sites' coordinates can be accesed [here](https://github.com/al-aleman/datillilo/blob/main/data/sampling_metadata_yuccavalida.tsv).
+
 ---
 ### DATA ANALYSIS
 ### Raw data processing and SNP–calling
 
-[This](https://github.com/al-aleman/datillilo/blob/main/data/raw_reads_list.txt) is a list of the raw demultiplexed raw sequences, we're working on making them available via Dryad shortly. The workflow and SNP data obtained after running the Stacks pipeline is already available [below](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed). 
+Note: We're currently uploading the demultiplexed raw sequences to Dryad, they'll be up shortly. The workflow and SNP data obtained after running the Stacks pipeline is already available [below](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed). 
 
 Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://github.com/ewels/MultiQC) and [BBTools](https://github.com/kbaseapps/BBTools).
 
@@ -181,7 +183,7 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
 ---
 ### Whole chloroplast genome sequences recovery
 
-This is a reference-guided workflow to reconstruct whole-chloroplast-genome sequences (as a by-product of the enzymatic fragmentation for the high-throughput sequencing libraries preparation without isolating cpDNA), as shown by [Aleman et al. (2023)](https://www.biorxiv.org/content/10.1101/2023.04.21.537876v1). We included raw-sequencing-data of 40 samples from [Arteaga et al. (2020)](https://www.frontiersin.org/articles/10.3389/fpls.2020.00685/full) and used the chloroplast genome of *Y. schidigera* (GenBank: [NC_032714.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1)) as reference.
+This is a reference-guided workflow to reconstruct whole-chloroplast-genome sequences (as a by-product of the enzymatic fragmentation for the high-throughput sequencing libraries preparation without isolating cpDNA), as shown by [Aleman et al. (2023)](https://www.biorxiv.org/content/10.1101/2023.04.21.537876v1). We included raw-sequencing-data of 40 samples from [Arteaga et al. (2020)](https://www.frontiersin.org/articles/10.3389/fpls.2020.00685/full) (sequences list [here](https://github.com/al-aleman/datillilo/blob/main/data/sequences_capensis.txt), see publication for metadata) and used the chloroplast genome of *Y. schidigera* (GenBank: [NC_032714.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1)) as reference.
 
 Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml), [Samtools](http://www.htslib.org/), [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD),  this [stats compiler script](https://github.com/al-aleman/datillilo/blob/main/scripts/mapping_stats.sh),  [another ID replacer](https://github.com/al-aleman/datillilo/blob/main/scripts/another_replacer.sh), [a file renamer](https://github.com/al-aleman/datillilo/blob/main/scripts/fasta_renamer.sh), and optionally, [seqtk](https://github.com/lh3/seqtk). 
 
