@@ -1,5 +1,5 @@
 # This script is used to generate a consensus sequence from a FASTA file containing multiple DNA sequences.
-# Usage python script.py input.fasta output.fasta
+# Usage: python script.py input.fasta output.fasta
 import sys
 
 
