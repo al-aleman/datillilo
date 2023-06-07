@@ -1,6 +1,6 @@
 ![enter image description here](https://st3.depositphotos.com/9223738/19443/v/600/depositphotos_194439354-stock-illustration-desert-seamless-pattern-with-joshua.jpg)
 
-Data and scripts for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that required software, functions, libraries, packages, modules (etc) were previously installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications. 
+Data and scripts for **"Divergent lineages in a young species: the case of Datilillo (*Yucca valida*), a broadly distributed plant from the Baja California Peninsula"**, [preprint here](https://www.biorxiv.org/content/10.1101/2023.05.22.541794v1). It is assumed that required software, functions, libraries, packages, modules (etc) are installed. Some arguments (e.g., the number of threads to use) should be adjusted to the system's specifications. 
 
 > Note: Please read the software manuals if following these scripts for another research or dataset and adjust parameters accordingly.
 
