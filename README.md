@@ -247,21 +247,35 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     cat V*fasta > valida.fasta
     cat C*fasta > capensis.fasta
     
-    # I prefer FASTA sequences to be one-liners
-    seqtk seq valida.fa
-    seqtk seq capensis.fa
+    # I prefer FASTA files to be one-liners
+    seqtk seq valida.fasta > valida.fa
+    seqtk seq capensis.fasta > capensis.fa
 
  - [x] Our whole-chloroplast-genome-sequences by species are ready!
  [Here](https://github.com/al-aleman/datillilo/blob/main/data/capensis_valida_fasta.zip) is a folder with the chloroplast sequences for each species, one species per file.
 
+Then, based on the mapping statistics I subset the [sequences from *Y. valida* with a breadth of coverage >0.5](https://github.com/al-aleman/datillilo/blob/main/data/subset_fastaIDs.txt) and concatenated them with the chloroplast genome reference from *Y. schidigera* for the intraspecific phylogenetic analyses.
+
+    seqtk subseq valida.fa subset_fastaIDs.txt > subset.fasta
+    cat subset.fasta ./../../../schidigera.fasta > pre_beast.fasta
+    mkdir raxml
+    seqtk seq pre_beast.fasta > ./raxml/pre_beast.fa
+
+Additionally,  using [this python script](https://github.com/al-aleman/datillilo/blob/main/scripts/consensus.py), I produced chloroplast consensus sequences for *Y. valida* and *Y. capensis*, using all the available sequences for each species.
+
+    mkdir beast
+    python consensus.py valida.fa valida_cons.fa
+    python consensus.py capensis.fa capensis_cons.fa
+    cat *_cons.fa > ./beast/consensus.fa
+
 ---
 ### Phylogenetic relationships and molecular clock analyses (under construction)
-Requirements: RAxML, [BEAST](https://github.com/beast-dev/beast-mcmc/releases/tag/v1.8.4) (I found version 1.8.4 to be more straightforward for replicating [Smith et al. (2021)](https://bsapubs.onlinelibrary.wiley.com/doi/full/10.1002/ajb2.1633)), [MAFFT](https://mafft.cbrc.jp/alignment/server/), and a [consensus-FASTA-maker](https://github.com/al-aleman/datillilo/blob/main/scripts/consensus.py).
+Requirements: [RAxML-ng](https://github.com/amkozlov/raxml-ng), [BEAST](https://github.com/beast-dev/beast-mcmc/releases/tag/v1.8.4) (I found version 1.8.4 to be more straightforward for replicating [Smith et al. (2021)](https://bsapubs.onlinelibrary.wiley.com/doi/full/10.1002/ajb2.1633)), and [MAFFT](https://mafft.cbrc.jp/alignment/server/).
 
-    # RAxML run (the outputs of interest are *.raxml.supportFBP and *.raxml.supportTBE)
+    cd raxml
     raxml-ng --all --msa *fa --model GTR+I+G --prefix tree --seed 12345 \
     --outgroup Yucca_schidigera --bs-metric fbp,tbe --tree rand{1000} \
     --bs-trees autoMRE --threads 32
-    
-    # 
-    python consensus.py input.fasta output.fasta
+    # RAxML run (the outputs of interest are *.raxml.supportFBP and *.raxml.supportTBE)
+
+RAxML results can be visualized on [iTOL 6](https://itol.embl.de/upload.cgi).
