@@ -10,8 +10,7 @@ Data and scripts for **"Divergent lineages in a young species: the case of Datil
 ### DATA ANALYSIS
 ### Raw data processing and SNP–calling
 
-Note: We're working on making the demultiplexed raw sequences available via Dryad shortly. 
-The workflow and SNP data obtained after running the Stacks pipeline is already available [below](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed). 
+[This](https://github.com/al-aleman/datillilo/blob/main/data/raw_reads_list.txt) is a list of the raw demultiplexed raw sequences, we're working on making them available via Dryad shortly. The workflow and SNP data obtained after running the Stacks pipeline is already available [below](https://github.com/al-aleman/datillilo/blob/main/README.md#:~:text=structure/%0Acd%20structure-,Here,-is%20a%20compressed). 
 
 Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://github.com/ewels/MultiQC) and [BBTools](https://github.com/kbaseapps/BBTools).
 
@@ -43,7 +42,7 @@ Requirements: [FastQC](https://github.com/s-andrews/FastQC), [MultiQC](https://g
 
 These (**13**) [samples](https://github.com/al-aleman/datillilo/blob/main/data/flagged_raw_sequences.txt) had less than one million raw reads and were removed as a quality control filter before assemblying loci.
 
-The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/data/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated). Note that Stacks' parameters were optimized according to [Paris et al. (2017)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.12775) and [Mastretta-Yanes et al. (2014)](https://onlinelibrary.wiley.com/doi/full/10.1111/1755-0998.12291) that involved iterating different ranges of values for the parameters *m* (the minimum number of identical reads required to create a stack), *M* (the number of mismatches allowed between loci on a single individual), and *n* (the number of mismatches allowed between loci when building the catalog). The Stacks' run below is based on the optimal set of parameters that maximized the amount of reliable information.
+The file [valida.txt](https://github.com/al-aleman/datillilo/blob/main/data/valida.txt) is the popmap for running [Stacks](https://catchenlab.life.illinois.edu/stacks/) (please verify that is tab- and not space-separated). Note that Stacks' parameters were optimized according to [Paris et al. (2017)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.12775) and [Mastretta-Yanes et al. (2014)](https://onlinelibrary.wiley.com/doi/full/10.1111/1755-0998.12291). That involved iterating different ranges of values for the parameters *m* (the minimum number of identical reads required to create a stack), *M* (the number of mismatches allowed between loci on a single individual), and *n* (the number of mismatches allowed between loci when building the catalog). The Stacks' run below is based on the optimal set of parameters that maximized the amount of reliable information.
 
     # De-novo Stacks' assembly
     cd ..
@@ -108,7 +107,7 @@ Results can be easily plotted using R (Two new popmaps will be needed, [pops.txt
 
 For the ADMIXTURE results, I like to use [Joana Meier's script](https://github.com/speciationgenomics/scripts/blob/master/plotADMIXTURE.r), it requires four arguments: the prefix for the ADMIXTURE output files (-p ), the file with the species information (-i ), the maximum number of *K* to be plotted (-k ), and a list with the populations or species separated by commas (-l <pop1,pop2...>). The list of populations provided with -l gives the order in which the populations or species shall be plotted. Example with *K* = 5 below:
 
-    Rscript plotADMIXTURE.r -p valida.oneSNP -i pops.txt -k 5 -l Northern,Central, Southern
+    Rscript plotADMIXTURE.r -p valida.oneSNP -i pops.txt -k 5 -l Northern,Central,Southern
 
 This is how I plot the PCA in R:
 
@@ -144,7 +143,7 @@ For the NJ tree from the samples' pairwise genetic distance matrix, I join the I
 ---
 ### Genetic diversity
 
-Descriptors (HE, H.O., and FIS) for each lineage and the mean pairwise Weir and Cockerham's weighted values of genetic differentiation (standardised FST) were calculated with [GENODIVE](https://www.bentleydrummer.nl/software/software/GenoDive.html). To assess the isolation by distance null hypothesis, i.e., the correlation between the geographical and genetic distance between samples, a Mantel test was carried out correlating the individuals' Euclidean genetic distance and the pairwise distance between sampling locations (in kilometres, produced with the [Geographic Distance Matrix Generator](https://biodiversityinformatics.amnh.org/open_source/gdmg/)), after introducing a random jitter (+/- 0.05°) to samples belonging to shared sampling locations ([file here](https://github.com/al-aleman/datillilo/blob/main/data/coordinates_jitter.txt)). The significance of the Mantel test was evaluated with 99,999 permutations. Genetic data conversion from *.vcf* to *.gen* was completed in [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/). Alternatively (if not having acces to GENODIVE), Plink, [VCFtools](https://vcftools.github.io/index.html), [Genepop](https://genepop.curtin.edu.au/), and/or [Arlequin](http://cmpg.unibe.ch/software/arlequin35/) can be used to get these answers.
+Descriptors (HE, HO, and FIS) for each lineage and the mean pairwise Weir and Cockerham's weighted values of genetic differentiation (standardised FST) were calculated with [GENODIVE](https://www.bentleydrummer.nl/software/software/GenoDive.html). To assess the isolation by distance null hypothesis, i.e., the correlation between the geographical and genetic distance between samples, a Mantel test was carried out correlating the individuals' Euclidean genetic distance and the pairwise distance between sampling locations (in kilometres, produced with the [Geographic Distance Matrix Generator](https://biodiversityinformatics.amnh.org/open_source/gdmg/)), after introducing a random jitter (+/- 0.05°) to samples belonging to shared sampling locations ([file here](https://github.com/al-aleman/datillilo/blob/main/data/coordinates_jitter.txt)). The significance of the Mantel test was evaluated with 99,999 permutations. Genetic data conversion from *.vcf* to *.gen* was completed in [PGDSpider](http://www.cmpg.unibe.ch/software/PGDSpider/). Alternatively (if not having acces to GENODIVE), Plink, [VCFtools](https://vcftools.github.io/index.html), [Genepop](https://genepop.curtin.edu.au/), and/or [Arlequin](http://cmpg.unibe.ch/software/arlequin35/) can be used to run these analyses.
 
 ---
 ### Outlier SNPs and signatures of differentiation by local adaptation
@@ -156,18 +155,18 @@ Analyses are performed in R, and the scripts can be found [here](https://github.
 
 Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Daniel Portik's [δaδi_pipeline](https://github.com/dportik/dadi_pipeline) and [Stacks_pipeline](https://github.com/dportik/Stacks_pipeline), and [easySFS](https://github.com/isaacovercast/easySFS). With the neutral *vcf* as input (ideally, in a new folder), we're back to populations (Stacks). We can use the neutral dataset to get the *haplotypes.tsv file, which we will input to [Convert_tsv_to_dadi.py](https://github.com/dportik/Stacks_pipeline/blob/master/stacks-pipeline-scripts/Convert_tsv_to_dadi.py) and produce [the SNP file](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/SNPs_file_Northern_Central_Southern.txt) to run δaδi. 
 
-> Friendly reminder to test which python version works best for you with each software.
+> This is a friendly reminder to test which python version works best for you with each software.
 
     populations -V valida.neutral.vcf -O . -M pops.txt -t 32 --vcf
     
-    # The script below will make the file SNPs_file_Northern_Central_Southern.txt, which will need to run Models_3D.py
+    # The script below will make the file SNPs_file_Northern_Central_Southern.txt, which will be needed to run Models_3D.py
     python Convert_tsv_to_dadi.py -i valida.neutral.haplotypes.tsv -o . -p popmap.txt
     
     # easySFS is a super-fast way to preview which projection is best, I do not use it for data conversion
     # I found 18,18,18 as a good trade-off to maximizing an even number of segregating sites (second number) and a balanced sample size (first number)
     python easySFS.py -i valida.neutral.vcf -p pops.txt --preview -a
 
-[Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below. WARNING: This is  slow. I'm sharing the [outputs of these analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results) as a consideration for time constrains. According to [the results' summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from a common ancestral population.
+[Here](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline) is everything needed to test the four possible three-populations simple models of i) simultaneous, ii) admixed, and consecutive divergence from iii) North to South and iv) South to North, without gene flow or changes in populations' sizes. They can be easily run as below. WARNING: This is  slow. I'm sharing the [outputs of these analyses](https://github.com/al-aleman/datillilo/tree/main/scripts/%CE%B4a%CE%B4i_pipeline/results) as a consideration for time constrains. According to [the results' summary](https://github.com/al-aleman/datillilo/blob/main/scripts/%CE%B4a%CE%B4i_pipeline/results/Results_Summary_Extended.txt), the optimal demographic model was the simultaneous divergence of the three nuclear genetic lineages from one common ancestral population.
 
     python dadi_Run_3D_Set_North-South.py
     python dadi_Run_3D_Set_South-North.py
@@ -184,7 +183,7 @@ Requirements: [δaδi](https://bitbucket.org/gutenkunstlab/dadi/src/master/), Da
 
 This is a reference-guided workflow to reconstruct whole-chloroplast-genome sequences (as a by-product of the enzymatic fragmentation for the high-throughput sequencing libraries preparation without isolating cpDNA), as shown by [Aleman et al. (2023)](https://www.biorxiv.org/content/10.1101/2023.04.21.537876v1). We included raw-sequencing-data of 40 samples from [Arteaga et al. (2020)](https://www.frontiersin.org/articles/10.3389/fpls.2020.00685/full) and used the chloroplast genome of *Y. schidigera* (GenBank: [NC_032714.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1)) as reference.
 
-Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml), [Samtools](http://www.htslib.org/), [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD),  this [stats compiler script](https://github.com/al-aleman/datillilo/blob/main/scripts/mapping_stats.sh),  [another replacer](https://github.com/al-aleman/datillilo/blob/main/scripts/another_replacer.sh), [a file renamer](https://github.com/al-aleman/datillilo/blob/main/scripts/fasta_renamer.sh), and optionally, [seqtk](https://github.com/lh3/seqtk). 
+Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://bowtie-bio.sourceforge.net/bowtie2/index.shtml), [Samtools](http://www.htslib.org/), [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD),  this [stats compiler script](https://github.com/al-aleman/datillilo/blob/main/scripts/mapping_stats.sh),  [another ID replacer](https://github.com/al-aleman/datillilo/blob/main/scripts/another_replacer.sh), [a file renamer](https://github.com/al-aleman/datillilo/blob/main/scripts/fasta_renamer.sh), and optionally, [seqtk](https://github.com/lh3/seqtk). 
 
     # Quality-trimming + adapters removal
     cd ..
@@ -198,7 +197,7 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     done
     cd cleandata
     
-    # Indexing the reference genome (should be inside the folder)
+    # Indexing the reference genome (the fasta file should be inside the folder)
     bowtie2-build ./schidigera.fasta schidigera
     mkdir plastome
     
@@ -234,7 +233,7 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
     cd chloroplast_sequences
     
     # Outputs of ANSGD will be called according to the sequencing identifiers, but the headers of every file will be based on the name of the reference genome. Let's change this.
-    # First, change the sequencing identifiers for the sampling identifiers
+    # First, change the sequencing identifiers for the sampling identifiers in the files' names
     chmod +x fasta_renamer.sh
     ./fasta_renamer.sh
     
@@ -258,9 +257,9 @@ Requirements: [BBTools](https://github.com/kbaseapps/BBTools), [Bowtie](https://
 Then, based on the mapping statistics I subset the [sequences from *Y. valida* with a breadth of coverage >0.5](https://github.com/al-aleman/datillilo/blob/main/data/subset_fastaIDs.txt) and concatenated them with the chloroplast genome reference from *Y. schidigera* for the intraspecific phylogenetic analyses.
 
     seqtk subseq valida.fa subset_fastaIDs.txt > subset.fasta
-    cat subset.fasta ./../../../schidigera.fasta > pre_beast.fasta
+    cat subset.fasta ./../../../schidigera.fasta > subset_root.fasta
     mkdir raxml
-    seqtk seq pre_beast.fasta > ./raxml/pre_beast.fa
+    seqtk seq subset_root.fasta > ./raxml/pre_beast.fa
 
 Additionally,  using [this python script](https://github.com/al-aleman/datillilo/blob/main/scripts/consensus.py), I produced chloroplast consensus sequences for *Y. valida* and *Y. capensis*, using all the available sequences for each species.
 
@@ -271,7 +270,7 @@ Additionally,  using [this python script](https://github.com/al-aleman/datillilo
 
 ---
 ### Phylogenetic relationships and molecular clock analyses
-Requirements: [RAxML-ng](https://github.com/amkozlov/raxml-ng), [BEAST](https://github.com/beast-dev/beast-mcmc/releases/tag/v1.8.4) (I found version 1.8.4 to be more straightforward for replicating [Smith et al. (2021)](https://bsapubs.onlinelibrary.wiley.com/doi/full/10.1002/ajb2.1633)), and [MAFFT](https://mafft.cbrc.jp/alignment/server/).
+Requirements: [RAxML-ng](https://github.com/amkozlov/raxml-ng), [BEAST](https://github.com/beast-dev/beast-mcmc/releases/tag/v1.8.4) (I found version 1.8.4 to be highly straightforward for replicating [Smith et al. (2021)](https://bsapubs.onlinelibrary.wiley.com/doi/full/10.1002/ajb2.1633)), and [MAFFT](https://mafft.cbrc.jp/alignment/server/).
 
     cd raxml
     raxml-ng --all --msa *fa --model GTR+I+G --prefix tree --seed 12345 \
@@ -281,14 +280,17 @@ Requirements: [RAxML-ng](https://github.com/amkozlov/raxml-ng), [BEAST](https://
 
 RAxML results can be visualized on [iTOL 6](https://itol.embl.de/upload.cgi).
 
-The consensus sequences were aligned to the chloroplast reference genomes of 15 species of the Agavoideae (*[Agave attenuata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032696.1/)*, *[Beschorneria septentrionalis](https://www.ncbi.nlm.nih.gov/nuccore/NC_032699.1/)*, *[Camassia scilloides](https://www.ncbi.nlm.nih.gov/nuccore/NC_032700.1/)*, *[Chlorogalum pomeridianum](https://www.ncbi.nlm.nih.gov/nuccore/NC_032701.1/)*, *[Hesperaloe campanulata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032702.1/)*, *[Hesperaloe parviflora](https://www.ncbi.nlm.nih.gov/nuccore/NC_032703.1/)*, *[Hesperocallis undulata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032704.1/)*, *[Hesperoyucca whipplei](https://www.ncbi.nlm.nih.gov/nuccore/NC_032705.1/)*, *[Hosta ventricosa](https://www.ncbi.nlm.nih.gov/nuccore//NC_032706.1)*, *[Manfreda virginica](https://www.ncbi.nlm.nih.gov/nuccore/NC_032707.1/)*, *[Schoenolirion croceum](https://www.ncbi.nlm.nih.gov/nuccore/NC_032710.1/)*, *[Yucca brevifolia](https://www.ncbi.nlm.nih.gov/nuccore/NC_032711.1/)*, *[Yucca filamentosa](https://www.ncbi.nlm.nih.gov/nuccore/NC_032712.1/)*, *[Yucca queretaroensis](https://www.ncbi.nlm.nih.gov/nuccore/NC_032713.1/)*, and *[Yucca schidigera](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1/)*)  using MAFFT on CBRC server, and applying the defualt settings + the flag *--nzero*.
+The consensus sequences were aligned to the chloroplast reference genomes of 15 species of the Agavoideae (*[Agave attenuata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032696.1/)*, *[Beschorneria septentrionalis](https://www.ncbi.nlm.nih.gov/nuccore/NC_032699.1/)*, *[Camassia scilloides](https://www.ncbi.nlm.nih.gov/nuccore/NC_032700.1/)*, *[Chlorogalum pomeridianum](https://www.ncbi.nlm.nih.gov/nuccore/NC_032701.1/)*, *[Hesperaloe campanulata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032702.1/)*, *[Hesperaloe parviflora](https://www.ncbi.nlm.nih.gov/nuccore/NC_032703.1/)*, *[Hesperocallis undulata](https://www.ncbi.nlm.nih.gov/nuccore/NC_032704.1/)*, *[Hesperoyucca whipplei](https://www.ncbi.nlm.nih.gov/nuccore/NC_032705.1/)*, *[Hosta ventricosa](https://www.ncbi.nlm.nih.gov/nuccore//NC_032706.1)*, *[Manfreda virginica](https://www.ncbi.nlm.nih.gov/nuccore/NC_032707.1/)*, *[Schoenolirion croceum](https://www.ncbi.nlm.nih.gov/nuccore/NC_032710.1/)*, *[Yucca brevifolia](https://www.ncbi.nlm.nih.gov/nuccore/NC_032711.1/)*, *[Yucca filamentosa](https://www.ncbi.nlm.nih.gov/nuccore/NC_032712.1/)*, *[Yucca queretaroensis](https://www.ncbi.nlm.nih.gov/nuccore/NC_032713.1/)*, and *[Yucca schidigera](https://www.ncbi.nlm.nih.gov/nuccore/NC_032714.1/)*)  using MAFFT on the CBRC server, applying the default settings plus the flag *--nzero*.
 
 PGDSpider 2.1.1.5 was used to convert data from *.fasta* to *.nex*. The aligned [FASTA](https://github.com/al-aleman/datillilo/blob/main/data/smith_aleman.fa) and [NEXUS](https://github.com/al-aleman/datillilo/blob/main/data/smith_aleman.nex) files are available.
 
-BEAUti was used to generate the BEAST XML file, with the following settings: A general time reversible model estimating the proportion of invariant sites (GTR + I) was employed. Gamma-distributed priors for the five substitution types and uniform priors (0-1) for the base frequencies and the proportion of invariant sites were established. An uncorrelated relaxed clock model with log-normal distributed rates was set up (mean = 1, standard deviation = 0.33), assuming a Yule process for the tree prior, starting from a random tree, establishing *Hosta ventricosa* as the outgroup, and forcing the ingroup's monophyly. A log-normal prior distribution on the age of the ingroup was specified to 14.5 million years (offset, mean = 1 standard deviation = 1.4), [based on the minimum age of the fossil *Protoyucca shadesii*](https://onlinelibrary.wiley.com/doi/full/10.1111/boj.12233), completing two independent runs of 60 million steps long with a sample every 6,000,000 generations. The runs were joined in LogCombiner 1.8.4, considering a 10% burn-in for each input. A maximum credibility tree was produced in TreeAnnotator 1.8.4, and each node's means, medians, and 95% confidence intervals were outputted. The final tree was visualized in FigTree. BEAST can be run from the command-line as:
+BEAUti was used to generate the BEAST XML file, with the following settings: A general time reversible model estimating the proportion of invariant sites (GTR + I) was employed. Gamma-distributed priors for the five substitution types and uniform priors (0-1) for the base frequencies and the proportion of invariant sites were established. An uncorrelated relaxed clock model with log-normal distributed rates was set up (mean = 1, standard deviation = 0.33), assuming a Yule process for the tree prior, starting from a random tree, establishing *Hosta ventricosa* as the outgroup, and forcing the ingroup's monophyly. A log-normal prior distribution on the age of the ingroup was specified to 14.5 million years (offset, mean = 1 standard deviation = 1.4), [based on the minimum age of the fossil *Protoyucca shadesii*](https://onlinelibrary.wiley.com/doi/full/10.1111/boj.12233), completing two independent runs of 60 million steps long with a sample every 6,000,000 generations. The runs were joined in LogCombiner 1.8.4, considering a 10% burn-in for each input. A maximum credibility tree was produced in TreeAnnotator 1.8.4, and each node's means, medians, and 95% confidence intervals were outputted. The final tree was visualized in FigTree. Here is the [XML-input for BEAST](https://github.com/al-aleman/datillilo/blob/main/data/smith_aleman.xml); and it can be run from the command-line as:
 
     beast -seed 12345 -threads 32 *xml
 
- - [x] Objective iii) estimating the species' age using whole-chloroplast-genome data is done! Is time to intepret the results.
+ - [x] Objective iii) estimating the species' age using whole-chloroplast-genome data is done! The only thing left is intepreting these results.
 
 ### END OF DATA ANALYSIS
+
+*Thinking-chair time*
+![enter image description here](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1032b378-9e4c-4e5b-9344-03d0fafe3154/ddzq14w-74e76891-57a8-4e2c-804a-32410994090d.png/v1/fill/w_1192,h_670,q_70,strp/blue_s_clues_and_you_living_room_by_jack1set2_ddzq14w-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6IlwvZlwvMTAzMmIzNzgtOWU0Yy00ZTViLTkzNDQtMDNkMGZhZmUzMTU0XC9kZHpxMTR3LTc0ZTc2ODkxLTU3YTgtNGUyYy04MDRhLTMyNDEwOTk0MDkwZC5wbmciLCJ3aWR0aCI6Ijw9MTI0OCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.QvIJO1CX4j-Tg0ebPf7OAI0cCL4a3LVNwP_noSFkP28)
