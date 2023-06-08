@@ -294,5 +294,5 @@ BEAUti was used to generate the BEAST XML file, with the following settings: A g
 
 ### END OF DATA ANALYSIS
 
-*Thinking-chair time*
+*It's thinking-chair time*
 ![enter image description here](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1032b378-9e4c-4e5b-9344-03d0fafe3154/ddzq14w-74e76891-57a8-4e2c-804a-32410994090d.png/v1/fill/w_1192,h_670,q_70,strp/blue_s_clues_and_you_living_room_by_jack1set2_ddzq14w-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6IlwvZlwvMTAzMmIzNzgtOWU0Yy00ZTViLTkzNDQtMDNkMGZhZmUzMTU0XC9kZHpxMTR3LTc0ZTc2ODkxLTU3YTgtNGUyYy04MDRhLTMyNDEwOTk0MDkwZC5wbmciLCJ3aWR0aCI6Ijw9MTI0OCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.QvIJO1CX4j-Tg0ebPf7OAI0cCL4a3LVNwP_noSFkP28)
