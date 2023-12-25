@@ -90,7 +90,7 @@ We will change the sequencing identifiers for the sampling identifiers [with thi
 Requirements: [Plink 1.9](https://www.cog-genomics.org/plink/1.9/basic_stats), [ADMIXTURE](https://dalexander.github.io/admixture/), and [R](https://www.r-project.org/).
 
     # I prefer to use Plink v.1
-    plink --vcf valida.oneSNP.vcf --allow-extra-chr --distance square --pca --make-bed
+    plink --vcf valida.oneSNP.vcf --allow-extra-chr --distance square --pca --make-bed --out valida.oneSNP
     # valida.oneSNP.dist and valida.oneSNP.dist.id are the pairwise genetic distance matrix results
     # valida.oneSNP.eigenval, and valida.oneSNP.eigenvec are the Principal Component Analysis (PCA) results
     
