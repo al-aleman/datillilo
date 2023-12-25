@@ -120,7 +120,7 @@ This is how I plot the PCA in R:
     pca <- pca[,-1]
     names(pca)[1] <- "ind"
     names(pca)[2:ncol(pca)] <- paste0("PC", 1:(ncol(pca)-1))
-    spp_loc<-read.table("pops.txt", sep="\t", header=T)
+    spp_loc<-read.table("PCA.txt", sep="\t", header=T)
     pca <- as_tibble(data.frame(pca, spp_loc))
     pca$Lineage <- factor(pca$Lineage, levels = c("Northern", "Central", "Southern"))
     pve <- data.frame(PC = 1:10, pve = eigenval/sum(eigenval)*100)
